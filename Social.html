@@ -113,8 +113,7 @@
 <!-- Application Logic -->
 <script>
   const getCurrentView = () => {
-    const path = window.location.pathname.replace(/\/+$/, '');
-    return window.location.hash === '#admin' || path.split('/').pop() === 'admin' ? 'admin' : 'user';
+    return window.location.hash === '#admin' ? 'admin' : 'user';
   };
 
   document.addEventListener('alpine:init', () => {

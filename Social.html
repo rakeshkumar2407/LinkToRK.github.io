@@ -113,6 +113,8 @@
 <!-- Application Logic -->
 <script>
   const getCurrentView = () => {
+    console.log('Hash:', window.location.hash);
+    console.log('Current view will be:', window.location.hash === '#admin' ? 'admin' : 'user');
     return window.location.hash === '#admin' ? 'admin' : 'user';
   };
 

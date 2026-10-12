@@ -11,46 +11,66 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-slate-900 text-slate-100 font-sans min-h-screen m-0" x-data="socialHub()">
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen m-0" x-data="socialHub()">
 
 <!-- Header Navigation -->
-<header class="bg-slate-800 border-b border-slate-700 py-4 px-6 flex justify-between items-center shadow-md">
-  <h1 class="text-xl font-bold tracking-wide text-indigo-400 flex items-center">
+<header class="bg-slate-950/80 border-b border-white/10 py-4 px-6 flex justify-center items-center backdrop-blur-xl">
+  <h1 class="text-lg sm:text-xl font-bold tracking-wide text-white flex items-center">
     <i class="fa-solid fa-share-nodes mr-2"></i>Connect with Rakesh Kumar
   </h1>
 </header>
 
 <!-- Main Content Container -->
-<main class="max-w-2xl mx-auto p-4 sm:p-6 mt-4">
+<main class="relative max-w-2xl mx-auto px-4 py-8 sm:px-6 sm:py-12">
+  <div x-show="message" x-text="message" role="status" class="mb-6 rounded-xl border border-indigo-500/30 bg-indigo-500/10 px-4 py-3 text-sm text-indigo-200"></div>
 
   <!-- ================= USER VIEW ================= -->
-  <section x-show="currentView === 'user'" class="space-y-6">
-    <!-- Profile Info -->
-    <div class="text-center space-y-3">
-      <img :src="profile.avatar" alt="Profile Avatar" class="w-32 h-32 rounded-full mx-auto border-4 border-indigo-500 shadow-xl object-cover">
-      <h2 class="text-2xl font-bold text-white" x-text="profile.name"></h2>
-      <p class="text-slate-400 text-sm max-w-sm mx-auto" x-text="profile.bio"></p>
+  <section x-show="currentView === 'user'" class="space-y-8">
+    <!-- Welcome and Profile -->
+    <div class="relative isolate overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-900 px-6 py-10 text-center shadow-2xl shadow-indigo-950/40 sm:px-12 sm:py-14">
+      <div class="pointer-events-none absolute -right-16 -top-20 -z-10 h-56 w-56 rounded-full bg-indigo-500/20 blur-3xl"></div>
+      <div class="pointer-events-none absolute -bottom-24 -left-12 -z-10 h-48 w-48 rounded-full bg-violet-500/10 blur-3xl"></div>
+      <span class="inline-flex items-center gap-2 rounded-full border border-indigo-300/20 bg-indigo-400/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-indigo-200">
+        <i class="fa-solid fa-sparkles"></i> A little corner of the internet
+      </span>
+      <div class="mx-auto mt-7 w-fit rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 p-1 shadow-xl shadow-indigo-500/20">
+        <img :src="profile.avatar" alt="Profile Avatar" class="h-32 w-32 rounded-full border-4 border-slate-950 object-cover sm:h-36 sm:w-36">
+      </div>
+      <p class="mt-6 text-sm font-medium text-indigo-200">Hey there, I’m</p>
+      <h2 class="mt-1 text-3xl font-extrabold tracking-tight text-white sm:text-4xl" x-text="profile.name"></h2>
+      <p class="mx-auto mt-4 max-w-md text-base leading-7 text-slate-300">
+        Thanks for stopping by! Explore what I’m sharing, follow along, and come say hello on your favorite platform.
+      </p>
+      <p x-show="profile.bio" class="mx-auto mt-5 max-w-md border-t border-white/10 pt-5 text-sm leading-6 text-slate-400" x-text="profile.bio"></p>
     </div>
 
     <!-- Social Links List -->
-    <div class="space-y-3 mt-6">
+    <div class="space-y-4">
+      <div class="px-1">
+        <h3 class="text-xl font-bold text-white">Find me around the web</h3>
+        <p class="mt-1 text-sm text-slate-400">Pick a link and let’s connect.</p>
+      </div>
       <template x-for="link in links" :key="link.id">
-        <a :href="link.url" target="_blank"
-           class="flex items-center justify-between p-4 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl shadow-lg transition transform hover:-translate-y-0.5 group">
-          <div class="flex items-center space-x-4">
-            <div class="w-10 h-10 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-lg group-hover:bg-indigo-600 group-hover:text-white transition">
+        <a :href="link.url" target="_blank" rel="noopener noreferrer"
+           class="group flex items-center justify-between rounded-2xl border border-white/10 bg-slate-900/80 p-4 shadow-lg shadow-black/10 transition duration-200 hover:-translate-y-0.5 hover:border-indigo-400/50 hover:bg-slate-800/90 sm:p-5">
+          <div class="flex min-w-0 items-center gap-4">
+            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-indigo-400/10 text-xl text-indigo-300 transition group-hover:bg-indigo-500 group-hover:text-white">
               <i :class="link.icon"></i>
             </div>
-            <span class="font-medium text-slate-200" x-text="link.title"></span>
+            <span class="truncate font-semibold text-slate-100" x-text="link.title"></span>
           </div>
-          <i class="fa-solid fa-arrow-up-right-from-square text-slate-500 group-hover:text-slate-300 text-sm"></i>
+          <span class="ml-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-slate-500 transition group-hover:translate-x-0.5 group-hover:text-indigo-200">
+            <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+          </span>
         </a>
       </template>
 
-      <div x-show="links.length === 0" class="text-center py-10 text-slate-500">
-        No social links available yet.
+      <div x-show="!loading && links.length === 0" class="rounded-2xl border border-dashed border-white/15 bg-slate-900/50 px-6 py-10 text-center text-slate-400">
+        <i class="fa-solid fa-link mb-3 text-2xl text-slate-500"></i>
+        <p>No links here just yet. Check back soon!</p>
       </div>
     </div>
+    <p class="pt-2 text-center text-sm text-slate-500">Thanks for being here <span class="text-indigo-300">✦</span></p>
   </section>
 
   <!-- ================= ADMIN PANEL ================= -->
@@ -140,57 +160,91 @@
 <!-- Application Logic -->
 <script>
   const getCurrentView = () => {
-    console.log('Hash:', window.location.hash);
-    console.log('Current view will be:', window.location.hash === '#admin' ? 'admin' : 'user');
     return window.location.hash === '#admin' ? 'admin' : 'user';
   };
+
+  const defaultProfile = {
+    name: 'Rakesh Kumar',
+    bio: 'Developer | Creator | Sharing ideas, projects, and things I’m learning.',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250'
+  };
+  const defaultLinks = [
+    { id: 1, title: 'YouTube Channel', url: 'https://youtube.com', icon: 'fa-brands fa-youtube' },
+    { id: 2, title: 'Instagram Profile', url: 'https://instagram.com', icon: 'fa-brands fa-instagram' },
+    { id: 3, title: 'GitHub Portfolio', url: 'https://github.com', icon: 'fa-brands fa-github' },
+    { id: 4, title: 'Twitter / X', url: 'https://twitter.com', icon: 'fa-brands fa-x-twitter' }
+  ];
 
   document.addEventListener('alpine:init', () => {
     Alpine.data('socialHub', () => ({
       currentView: getCurrentView(),
-      profile: JSON.parse(localStorage.getItem('social_profile')) || {
-        name: 'Alex Johnson',
-        bio: 'Digital Creator | Developer | Tech Enthusiast 🚀',
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250'
-      },
+      profile: { ...defaultProfile },
+      links: defaultLinks.map(link => ({ ...link })),
+      message: '',
+      loading: true,
       newTitle: '',
       newUrl: '',
       newIcon: '',
-      saveProfile() {
-        localStorage.setItem('social_profile', JSON.stringify(this.profile));
+      async apiRequest(path, options = {}) {
+        const response = await fetch(`/api${path}`, {
+          ...options,
+          headers: { 'Content-Type': 'application/json', ...options.headers }
+        });
+        const result = response.status === 204 ? null : await response.json();
+        if (!response.ok) throw new Error(result?.error || 'The request failed.');
+        return result;
       },
-      init() {
+      async init() {
         const updateView = () => { this.currentView = getCurrentView(); };
         window.addEventListener('popstate', updateView);
         window.addEventListener('hashchange', updateView);
+        try {
+          [this.profile, this.links] = await Promise.all([
+            this.apiRequest('/profile'),
+            this.apiRequest('/links')
+          ]);
+        } catch (error) {
+          this.message = this.currentView === 'admin'
+            ? `Database unavailable: ${error.message} Start the local app with npm start.`
+            : '';
+        } finally {
+          this.loading = false;
+        }
       },
-      links: JSON.parse(localStorage.getItem('social_links')) || [
-        { id: 1, title: 'YouTube Channel', url: 'https://youtube.com', icon: 'fa-brands fa-youtube' },
-        { id: 2, title: 'Instagram Profile', url: 'https://instagram.com', icon: 'fa-brands fa-instagram' },
-        { id: 3, title: 'GitHub Portfolio', url: 'https://github.com', icon: 'fa-brands fa-github' },
-        { id: 4, title: 'Twitter / X', url: 'https://twitter.com', icon: 'fa-brands fa-x-twitter' }
-      ],
-      addLink() {
-        if (!this.newTitle || !this.newUrl || !this.newIcon) return;
-
-        this.links.push({
-          id: Date.now(),
-          title: this.newTitle,
-          url: this.newUrl,
-          icon: this.newIcon
-        });
-
-        this.saveToStorage();
-        this.newTitle = '';
-        this.newUrl = '';
-        this.newIcon = '';
+      async saveProfile() {
+        try {
+          this.profile = await this.apiRequest('/profile', {
+            method: 'PUT',
+            body: JSON.stringify(this.profile)
+          });
+          this.message = 'Profile saved.';
+        } catch (error) {
+          this.message = `Could not save profile: ${error.message}`;
+        }
       },
-      deleteLink(id) {
-        this.links = this.links.filter(link => link.id !== id);
-        this.saveToStorage();
+      async addLink() {
+        try {
+          const link = await this.apiRequest('/links', {
+            method: 'POST',
+            body: JSON.stringify({ title: this.newTitle, url: this.newUrl, icon: this.newIcon })
+          });
+          this.links.push(link);
+          this.newTitle = '';
+          this.newUrl = '';
+          this.newIcon = '';
+          this.message = 'Link published.';
+        } catch (error) {
+          this.message = `Could not publish link: ${error.message}`;
+        }
       },
-      saveToStorage() {
-        localStorage.setItem('social_links', JSON.stringify(this.links));
+      async deleteLink(id) {
+        try {
+          await this.apiRequest(`/links/${id}`, { method: 'DELETE' });
+          this.links = this.links.filter(link => link.id !== id);
+          this.message = 'Link deleted.';
+        } catch (error) {
+          this.message = `Could not delete link: ${error.message}`;
+        }
       }
     }));
   });

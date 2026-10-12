@@ -55,6 +55,33 @@
 
   <!-- ================= ADMIN PANEL ================= -->
   <section x-show="currentView === 'admin'" class="space-y-6">
+    <!-- Edit Profile -->
+    <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-xl">
+      <h3 class="text-lg font-bold text-white mb-4 flex items-center">
+        <i class="fa-solid fa-user-pen mr-2 text-indigo-400"></i> Edit Profile
+      </h3>
+      <form @submit.prevent="saveProfile" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Profile Name</label>
+          <input type="text" x-model="profile.name" required
+                 class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Bio</label>
+          <textarea x-model="profile.bio" rows="3"
+                    class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500"></textarea>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Profile Image URL</label>
+          <input type="url" x-model="profile.avatar" required
+                 class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500">
+        </div>
+        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-lg transition shadow-md">
+          Save Profile
+        </button>
+      </form>
+    </div>
+
     <!-- Add Link Form -->
     <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-xl">
       <h3 class="text-lg font-bold text-white mb-4 flex items-center">
@@ -121,7 +148,7 @@
   document.addEventListener('alpine:init', () => {
     Alpine.data('socialHub', () => ({
       currentView: getCurrentView(),
-      profile: {
+      profile: JSON.parse(localStorage.getItem('social_profile')) || {
         name: 'Alex Johnson',
         bio: 'Digital Creator | Developer | Tech Enthusiast 🚀',
         avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250'
@@ -129,6 +156,9 @@
       newTitle: '',
       newUrl: '',
       newIcon: '',
+      saveProfile() {
+        localStorage.setItem('social_profile', JSON.stringify(this.profile));
+      },
       init() {
         const updateView = () => { this.currentView = getCurrentView(); };
         window.addEventListener('popstate', updateView);

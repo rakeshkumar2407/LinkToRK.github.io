@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile & Social Links</title>
+    <!-- FontAwesome for Social Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-gradient: #090909;
+            --card-bg: rgba(20, 20, 20, 0.88);
+            --card-border: rgba(255, 138, 30, 0.48);
+            --btn-bg: rgba(255, 255, 255, 0.045);
+            --btn-hover: rgba(255, 138, 30, 0.13);
+            --text-main: #fffaf4;
+            --text-sub: #aaa39b;
+            --accent: #ff8a1e;
+            --accent-bright: #ffad4d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background:
+                radial-gradient(ellipse at 50% 5%, rgba(255, 111, 0, 0.16), transparent 42%),
+                radial-gradient(ellipse at 100% 100%, rgba(255, 138, 30, 0.08), transparent 38%),
+                var(--bg-gradient);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            overflow: hidden;
+            color: var(--text-main);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+            max-height: calc(100vh - 48px);
+            display: flex;
+            flex-direction: column;
+            background: var(--card-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 138, 30, 0.7);
+            border-radius: 28px;
+            padding: 36px 28px;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.65), 0 0 18px rgba(255, 138, 30, 0.3), 0 0 48px rgba(255, 111, 0, 0.2), 0 0 90px rgba(255, 111, 0, 0.1), inset 0 0 18px rgba(255, 138, 30, 0.035);
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-wrapper {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 20px auto 20px;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center calc(50% + 10px);
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 0 5px rgba(255, 138, 30, 0.18), 0 0 18px 6px rgba(255, 138, 30, 0.3), 0 0 38px 12px rgba(255, 111, 0, 0.2), 0 10px 30px rgba(0, 0, 0, 0.55);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-wrapper:hover .profile-img {
+            transform: scale(1.05);
+        }
+
+        .badge {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            background: linear-gradient(135deg, var(--accent-bright), #f05a00);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 12px;
+            border: 2px solid #141414;
+            box-shadow: 0 0 16px rgba(255, 138, 30, 0.75), 0 3px 12px rgba(255, 111, 0, 0.4);
+        }
+
+        .name {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -0.02em;
+        }
+
+        .username {
+            font-size: 14px;
+            color: var(--accent-bright);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .email {
+            display: inline-block;
+            margin-bottom: 12px;
+            color: var(--accent-bright);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            overflow-wrap: anywhere;
+        }
+
+        .email:hover {
+            color: var(--text-main);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .email:focus-visible {
+            outline: 2px solid var(--accent-bright);
+            outline-offset: 3px;
+            border-radius: 2px;
+        }
+
+        .bio {
+            font-size: 14px;
+            color: var(--text-sub);
+            line-height: 1.5;
+            margin-bottom: 28px;
+        }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            flex: 0 1 auto;
+            min-height: 0;
+            max-height: min(42vh, 360px);
+            overflow-y: auto;
+            padding: 2px 6px 2px 0;
+            scrollbar-color: var(--accent) rgba(255, 255, 255, 0.06);
+            scrollbar-width: thin;
+        }
+
+        .links-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .links-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 6px;
+        }
+
+        .links-container::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 6px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 14px 20px;
+            background: var(--btn-bg);
+            border: 1px solid rgba(255, 138, 30, 0.38);
+            border-radius: 16px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 15px;
+            text-align: left;
+            cursor: pointer;
+            box-shadow: 0 0 12px rgba(255, 111, 0, 0.08);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .social-link:hover {
+            background: var(--btn-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35), 0 0 18px rgba(255, 138, 30, 0.12);
+            border-color: rgba(255, 138, 30, 0.55);
+        }
+
+        .social-link:focus-visible {
+            outline: 2px solid var(--accent-bright);
+            outline-offset: 3px;
+        }
+
+        .website-notice {
+            padding: 16px 20px;
+            border: 1px solid rgba(255, 138, 30, 0.38);
+            border-radius: 16px;
+            background: rgba(255, 138, 30, 0.08);
+            text-align: left;
+        }
+
+        .website-notice[hidden] {
+            display: none;
+        }
+
+        .website-notice strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--accent-bright);
+        }
+
+        .website-notice p {
+            color: var(--text-sub);
+            font-size: 14px;
+        }
+
+        .link-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .link-left i {
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+            color: var(--accent-bright);
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+
+        .social-link:hover .link-left i {
+            transform: scale(1.08);
+        }
+
+        .arrow {
+            font-size: 12px;
+            color: var(--text-sub);
+            transition: transform 0.25s ease, color 0.25s ease;
+        }
+
+        .social-link:hover .arrow {
+            transform: translateX(4px);
+            color: var(--text-main);
+        }
+
+        .footer {
+            margin-top: 32px;
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        .footer::before {
+            content: "";
+            display: block;
+            width: 42px;
+            height: 2px;
+            margin: 0 auto 16px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        @media (max-width: 480px) {
+            body {
+                height: 100svh;
+                padding: 16px;
+            }
+
+            .container {
+                max-height: calc(100svh - 32px);
+                padding: 28px 20px;
+                border-radius: 24px;
+            }
+
+            .links-container {
+                max-height: min(42svh, 360px);
+            }
+
+            .social-link {
+                padding: 14px 16px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            body {
+                padding: 12px;
+            }
+
+            .container {
+                padding: 24px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Profile Image & Header -->
+    <div class="profile-wrapper">
+        <img
+                src="assets/profile.jpg"
+                alt="Profile Picture"
+                class="profile-img"
+        >
+        <div class="badge"><i class="fa-solid fa-check"></i></div>
+    </div>
+
+    <h1 class="name">Rakesh Kumar</h1>
+    <a class="email" href="mailto:rakesh.kumar07.in@gmail.com">rakesh.kumar07.in@gmail.com</a>
+    <p class="bio">Developer | Building custom projects tailored to your needs.</p>
+
+    <!-- Social Media Links (All open in a new tab) -->
+    <div class="links-container">
+        <a href="https://portfolio-react-green-gamma.vercel.app/" target="_blank" rel="noopener noreferrer" class="social-link">
+            <div class="link-left">
+                <i class="fa-solid fa-user"></i>
+                <span>Profile</span>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+        </a>
+
+        <button type="button" class="social-link" id="website-button" aria-expanded="false" aria-controls="website-notice">
+            <span class="link-left">
+                <i class="fa-solid fa-globe"></i>
+                <span>Website</span>
+            </span>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+        </button>
+        <div class="website-notice" id="website-notice" aria-live="polite" hidden>
+            <strong>Coming Soon</strong>
+            <p>Codagge — a coding platform.</p>
+        </div>
+
+        <a href="https://t.me/boost/codagge" target="_blank" rel="noopener noreferrer" class="social-link">
+            <div class="link-left">
+                <i class="fa-brands fa-telegram"></i>
+                <span>Telegram</span>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+        </a>
+
+        <a href="https://discord.gg/w4rXzyByM" target="_blank" rel="noopener noreferrer" class="social-link">
+            <div class="link-left">
+                <i class="fa-brands fa-discord"></i>
+                <span>Discord</span>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+        </a>
+
+        <a href="https://www.instagram.com/rakeshkummar_/" target="_blank" rel="noopener noreferrer" class="social-link instagram">
+            <div class="link-left">
+                <i class="fa-brands fa-instagram"></i>
+                <span>Instagram</span>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+        </a>
+
+        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-link youtube">
+            <div class="link-left">
+                <i class="fa-brands fa-youtube"></i>
+                <span>YouTube Channel</span>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+        </a>
+
+        <a href="https://github.com/rakeshkumar2407" target="_blank" rel="noopener noreferrer" class="social-link github">
+            <div class="link-left">
+                <i class="fa-brands fa-github"></i>
+                <span>GitHub Projects</span>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+        </a>
+
+        <a href="https://www.linkedin.com/in/rakeshkumar2407" target="_blank" rel="noopener noreferrer" class="social-link linkedin">
+            <div class="link-left">
+                <i class="fa-brands fa-linkedin"></i>
+                <span>LinkedIn</span>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+        </a>
+
+        <a href="https://x.com/RakeshKummar07" target="_blank" rel="noopener noreferrer" class="social-link twitter">
+            <div class="link-left">
+                <i class="fa-brands fa-twitter"></i>
+                <span>X / Twitter</span>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+        </a>
+    </div>
+
+    <div class="footer">
+        © 2026 • All Rights Reserved
+    </div>
+</div>
+
+<script>
+    const websiteButton = document.getElementById('website-button');
+    const websiteNotice = document.getElementById('website-notice');
+
+    websiteButton.addEventListener('click', () => {
+        const isExpanded = websiteButton.getAttribute('aria-expanded') === 'true';
+        websiteButton.setAttribute('aria-expanded', String(!isExpanded));
+        websiteNotice.hidden = isExpanded;
+    });
+</script>
+
+</body>
+</html>
